@@ -1405,6 +1405,7 @@ dependencies = [
     { name = "langchain-google-genai" },
     { name = "langchain-groq" },
     { name = "langchain-openai" },
+    { name = "langgraph" },
     { name = "python-dotenv" },
 ]
 
@@ -1421,6 +1422,7 @@ requires-dist = [
     { name = "langchain-google-genai", specifier = ">=4.2.3" },
     { name = "langchain-groq", specifier = ">=1.1.2" },
     { name = "langchain-openai", specifier = ">=1.2.2" },
+    { name = "langgraph", specifier = ">=1.2.2" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
 ]
 
