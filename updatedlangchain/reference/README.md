@@ -15,9 +15,15 @@ Visual notes aligned with your training diagram (LLM ↔ Tool loop, ReAct, GenAI
 
 ## Diagrams
 
+Charts use a **light theme** (white / light-gray boxes, **dark text**) for readability in Markdown Preview and GitHub.
+
+<!-- Mermaid light theme: prepend to each chart -->
+<!-- %%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","secondaryColor":"#f3f4f6","tertiaryColor":"#fffbeb","mainBkg":"#ffffff","nodeTextColor":"#111827","clusterBkg":"#f9fafb","clusterBorder":"#9ca3af","actorBkg":"#ffffff","actorTextColor":"#111827","signalColor":"#111827"}}}%% -->
+
 ### 1. Training diagram — Basic Agent + GenAI App
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","mainBkg":"#ffffff","nodeTextColor":"#111827","clusterBkg":"#f9fafb","clusterBorder":"#9ca3af"}}}%%
 flowchart LR
   subgraph Input
     U([User / I/p])
@@ -38,13 +44,14 @@ flowchart LR
 
   LLM --> O --> APP
 
-  style LLM fill:#1a1d27,stroke:#f4c542,color:#f4c542
-  style T fill:#2a1520,stroke:#e879a9,color:#e879a9
+  style LLM fill:#fffbeb,stroke:#d97706,color:#111827
+  style T fill:#fdf2f8,stroke:#db2777,color:#111827
 ```
 
 ### 2. ReAct loop (Thought → Action → Observation)
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","mainBkg":"#ffffff","nodeTextColor":"#111827"}}}%%
 flowchart TD
   START([User question]) --> THOUGHT[Thought: plan what to do]
   THOUGHT --> NEED{Need external<br/>data or action?}
@@ -54,15 +61,16 @@ flowchart TD
   OBS --> THOUGHT
   ANSWER --> END([Done])
 
-  style THOUGHT fill:#1f2937,stroke:#9ca3af
-  style ACTION fill:#2a1520,stroke:#e879a9
-  style OBS fill:#2a1520,stroke:#e879a9
-  style ANSWER fill:#1a1d27,stroke:#f4c542
+  style THOUGHT fill:#f3f4f6,stroke:#6b7280,color:#111827
+  style ACTION fill:#fdf2f8,stroke:#db2777,color:#111827
+  style OBS fill:#fdf2f8,stroke:#db2777,color:#111827
+  style ANSWER fill:#fffbeb,stroke:#d97706,color:#111827
 ```
 
 ### 3. LangChain `create_agent` — what you assemble
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","mainBkg":"#ffffff","nodeTextColor":"#111827","clusterBkg":"#f9fafb","clusterBorder":"#9ca3af"}}}%%
 flowchart TB
   ENV[".env<br/>OPENAI_API_KEY"] --> CREATE
   subgraph CREATE["create_agent(...)"]
@@ -74,13 +82,13 @@ flowchart TB
   GRAPH --> INV["agent.invoke({ messages: [...] })"]
   INV --> RES["response['messages']"]
 
-  style GRAPH fill:#1a1d27,stroke:#4b5563
-  style CREATE fill:#141820,stroke:#4b5563
+  style GRAPH fill:#fffbeb,stroke:#d97706,color:#111827
 ```
 
 ### 4. Sequence — your notebook (`get_weather` / Bangalore)
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"actorBkg":"#ffffff","actorBorder":"#374151","actorTextColor":"#111827","signalColor":"#111827","noteBkgColor":"#fffbeb","noteTextColor":"#111827"}}}%%
 sequenceDiagram
   actor User
   participant Agent as create_agent graph
@@ -100,6 +108,7 @@ sequenceDiagram
 ### 5. Agent with tools vs chat-only
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","mainBkg":"#ffffff","nodeTextColor":"#111827","clusterBkg":"#f9fafb","clusterBorder":"#9ca3af"}}}%%
 flowchart LR
   subgraph NoTools["tools = []"]
     A1[User] --> L1[LLM] --> R1[Reply]
@@ -112,24 +121,26 @@ flowchart LR
     L2 --> R2[Reply]
   end
 
-  style NoTools fill:#141820,stroke:#4b5563
-  style WithTools fill:#141820,stroke:#4b5563
+  style L1 fill:#fffbeb,stroke:#d97706,color:#111827
+  style L2 fill:#fffbeb,stroke:#d97706,color:#111827
+  style T2 fill:#fdf2f8,stroke:#db2777,color:#111827
 ```
 
 ### 6. Message types in `response["messages"]`
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","mainBkg":"#ffffff","nodeTextColor":"#111827"}}}%%
 flowchart LR
   H[HumanMessage<br/>user question] --> AI1[AIMessage<br/>tool_calls]
   AI1 --> TM[ToolMessage<br/>tool result]
   TM --> AI2[AIMessage<br/>final text]
   AI2 --> OUT["[-1].content"]
 
-  style H fill:#1f2937,stroke:#9ca3af
-  style AI1 fill:#1a1d27,stroke:#e879a9
-  style TM fill:#2a1520,stroke:#e879a9
-  style AI2 fill:#1a1d27,stroke:#f4c542
-  style OUT fill:#1a1d27,stroke:#f4c542
+  style H fill:#ffffff,stroke:#6b7280,color:#111827
+  style AI1 fill:#fdf2f8,stroke:#db2777,color:#111827
+  style TM fill:#fce7f3,stroke:#be185d,color:#111827
+  style AI2 fill:#fffbeb,stroke:#d97706,color:#111827
+  style OUT fill:#ecfdf5,stroke:#059669,color:#111827
 ```
 
 ---
@@ -165,6 +176,7 @@ Source (your install): `langchain/agents/factory.py` → returns `CompiledStateG
 ### Build-time pipeline (when you call `create_agent(...)`)
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","mainBkg":"#ffffff","nodeTextColor":"#111827"}}}%%
 flowchart TD
   A["create_agent(model, tools, system_prompt)"] --> B{model is str?}
   B -->|yes| C["init_chat_model('gpt-4o-mini')<br/>→ ChatOpenAI instance"]
@@ -200,6 +212,7 @@ If `tools=[]`, there is **no** `"tools"` node and **no** tool loop — one model
 **State** is mainly `{ "messages": [...] }` — the growing chat + tool history.
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","labelTextColor":"#111827"}}}%%
 stateDiagram-v2
   [*] --> Model: START
   Model --> Tools: AIMessage has tool_calls
@@ -351,6 +364,7 @@ See **Diagrams §4 and §6** above for sequence and message flow.
 | 4 | `AIMessage` (no tool calls) | **O/p** — final natural-language answer |
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","mainBkg":"#ffffff","nodeTextColor":"#111827","clusterBkg":"#f9fafb","clusterBorder":"#9ca3af"}}}%%
 flowchart LR
   subgraph invoke["agent.invoke(...)"]
     direction TB
@@ -421,6 +435,7 @@ Ensure the matching key is in `.env` (`GROQ_API_KEY`, `GOOGLE_API_KEY`, etc.).
 ### End-to-end cheat sheet (one picture)
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#111827","primaryBorderColor":"#374151","lineColor":"#374151","mainBkg":"#ffffff","nodeTextColor":"#111827","clusterBkg":"#f9fafb","clusterBorder":"#9ca3af"}}}%%
 flowchart TB
   subgraph setup["Setup (once)"]
     E[load_dotenv]
